@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dediche per il Mio Amico</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes slideInDown {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        @keyframes particleFloat {
+            0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-100vh) translateX(100px) rotate(360deg); opacity: 0; }
+        }
+
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes bounceIn {
+            0% { opacity: 0; transform: translateY(20px); }
+            50% { opacity: 1; transform: translateY(-5px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 0;
+            margin: 0;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .particle {
+            position: fixed;
+            pointer-events: none;
+            font-size: 2em;
+            opacity: 0;
+            z-index: 9999;
+        }
+
+        .nav-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(102, 126, 234, 0.95);
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            z-index: 1000;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            animation: slideInDown 0.6s ease-out;
+        }
+
+        .nav-title {
+            font-size: 1.3em;
+            font-weight: bold;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85em;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+
+        main {
+            padding-top: 70px;
+            padding-bottom: 40px;
+        }
+
+        section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 20px;
+        }
+
+        .section-hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section-hero::before,
+        .section-hero::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .section-hero::before {
+            width: 300px;
+            height: 300px;
+            top: -50px;
+            right: -100px;
+        }
+
+        .section-hero::after {
+            width: 250px;
+            height: 250px;
+            bottom: -50px;
+            left: -50px;
+            animation-delay: 2s;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 800px;
+        }
+
+        .hero-content h1 {
+            font-size: 4em;
+            margin-bottom: 20px;
+            text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.4);
+            animation: slideInDown 1s ease-out;
+        }
+
+        .hero-content .emoji {
+            animation: pulse 2s ease-in-out infinite;
+            display: inline-block;
+        }
+
+        .hero-content p {
+            font-size: 1.3em;
+            margin: 10px 0;
+            opacity: 0.95;
+            animation: fadeInUp 1s ease-out 0.3s backwards;
+        }
+
+        .control-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease-out 0.5s backwards;
+        }
+
+        .btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.08);
+        }
+
+        .section-white {
+            background: white;
+            color: #333;
+        }
+
+        .section-light {
+            background: linear-gradient(135deg, #f0f2ff 0%, #f5f0ff 100%);
+            color: #333;
+        }
+
+        .section-title {
+            font-size: 2.8em;
+            margin-bottom: 40px;
+            color: #667eea;
+            text-align: center;
+            animation: slideInUp 0.8s ease-out;
+        }
+
+        .section-light .section-title {
+            color: #667eea;
+        }
+
+        .gallery-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            animation: fadeInUp 0.6s ease-out;
+            transform-origin: center;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.1) rotateY(5deg);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            transition: filter 0.4s ease;
+            display: block;
+        }
+
+        .gallery-item:hover img {
+            filter: brightness(1.15) saturate(1.3);
+        }
+
+        .gallery-label {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.3));
+            color: white;
+            padding: 20px 15px;
+            font-weight: bold;
+            font-size: 1.1em;
+            text-align: center;
+            transform: translateY(30px);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-label {
+            transform: translateY(0);
+        }
+
+        .dediche-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            width: 100%;
+            max-width: 1400px;
+        }
+
+        .dedica {
+            padding: 30px;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fb 100%);
+            border-left: 6px solid #667eea;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.15);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .dedica::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+            transition: left 0.6s ease;
+            z-index: 0;
+        }
+
+        .dedica:hover::before {
+            left: 100%;
+        }
+
+        .dedica:hover {
+            transform: translateY(-15px) scale(1.03);
+            box-shadow: 0 20px 50px rgba(102, 126, 234, 0.3);
+            border-left-color: #764ba2;
+        }
+
+        .dedica-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .dedica h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .emoji {
+            display: inline-block;
+            font-size: 2em;
+            animation: twinkle 4s ease-in-out infinite;
+        }
+
+        .dedica p {
+            color: #555;
+            line-height: 1.9;
+            font-size: 1.05em;
+        }
+
+        .sound-icon {
+            cursor: pointer;
+            font-size: 1.3em;
+            transition: transform 0.2s;
+            display: inline-block;
+        }
+
+        .sound-icon:hover {
+            transform: scale(1.4) rotate(15deg);
+        }
+
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            width: 100%;
+            max-width: 800px;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, #667eea, #764ba2);
+        }
+
+        .timeline-item {
+            display: flex;
+            margin-bottom: 20px;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .timeline-item:nth-child(odd) {
+            flex-direction: row;
+            text-align: right;
+            padding-right: 55%;
+        }
+
+        .timeline-item:nth-child(even) {
+            flex-direction: row-reverse;
+            text-align: left;
+            padding-left: 55%;
+        }
+
+        .timeline-content {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            width: 100%;
+        }
+
+        .timeline-content h4 {
+            font-size: 1.3em;
+            margin-bottom: 8px;
+        }
+
+        .timeline-content p {
+            font-size: 0.95em;
+            opacity: 0.95;
+        }
+
+        .timeline-dot {
+            width: 20px;
+            height: 20px;
+            background: white;
+            border: 4px solid #667eea;
+            border-radius: 50%;
+            margin-top: 5px;
+            margin-left: -12px;
+            margin-right: -12px;
+            position: relative;
+            z-index: 1;
+            animation: bounceIn 0.6s ease-out;
+        }
+
+        .quotes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .quote-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 35px;
+            border-radius: 15px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            position: relative;
+            animation: fadeInUp 0.6s ease-out;
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+
+        .quote-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .quote-mark {
+            font-size: 3em;
+            opacity: 0.3;
+            margin-bottom: 10px;
+        }
+
+        .quote-text {
+            font-size: 1.2em;
+            font-style: italic;
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
+
+        .quote-author {
+            font-size: 0.95em;
+            opacity: 0.9;
+        }
+
+        .wishes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .wish-item {
+            background: linear-gradient(135deg, #f0f2ff 0%, #f5f0ff 100%);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+            animation: scaleIn 0.6s ease-out;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+
+        .wish-item:hover {
+            border-color: #667eea;
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+        }
+
+        .wish-emoji {
+            font-size: 3em;
+            margin-bottom: 15px;
+            display: inline-block;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .wish-text {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        footer {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        footer h2 {
+            font-size: 2.2em;
+            margin-bottom: 20px;
+            animation: slideInUp 0.8s ease-out;
+        }
+
+        footer p {
+            font-size: 1.1em;
+            margin: 15px 0;
+            opacity: 0.95;
+            animation: fadeInUp 0.8s ease-out 0.3s backwards;
+        }
+
+        footer .stars {
+            animation: twinkle 2s ease-in-out infinite;
+            display: inline-block;
+            margin: 0 5px;
+        }
+
+        .scroll-indicator {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 1.5em;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            animation: float 3s ease-in-out infinite;
+            transition: all 0.3s;
+            z-index: 999;
+        }
+
+        .scroll-indicator:hover {
+            transform: scale(1.2);
+        }
+
+        @media (max-width: 768px) {
+            .nav-bar {
+                padding: 10px 15px;
+            }
+
+            .section-title {
+                font-size: 2em;
+            }
+
+            .hero-content h1 {
+                font-size: 2.2em;
+            }
+
+            .timeline::before {
+                left: 10%;
+            }
+
+            .timeline-item {
+                padding-left: 0 !important;
+                padding-right: 0 !important;
+                padding-left: 60px;
+            }
+
+            .timeline-item:nth-child(even) {
+                flex-direction: row;
+            }
+
+            .gallery-container {
+                grid-template-columns: 1fr;
+            }
+
+            .dediche-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav-bar">
+        <div class="nav-title">💝 Le Mie Dediche 💝</div>
+        <div class="nav-buttons">
+            <button class="nav-btn" onclick="scrollToSection('hero')">Home</button>
+            <button class="nav-btn" onclick="scrollToSection('gallery')">Foto</button>
+            <button class="nav-btn" onclick="scrollToSection('dediche')">Dediche</button>
+            <button class="nav-btn" onclick="scrollToSection('quotes')">Citazioni</button>
+            <button class="nav-btn" onclick="toggleBackgroundMusic()">🎵</button>
+        </div>
+    </nav>
+
+    <main>
+        <!-- HERO SECTION -->
+        <section class="section-hero" id="hero">
+            <div class="hero-content">
+                <h1><span class="emoji">💝</span> Dediche per il Mio Amico <span class="emoji">💝</span></h1>
+                <p>Un tributo sincero a qualcuno di speciale</p>
+                <p style="font-size: 1.1em; opacity: 0.85;">Parole, immagini, suoni e amore infinito ❤️</p>
+                <div class="control-buttons">
+                    <button class="btn" onclick="playRandomSound()">🎉 Celebra Con Me!</button>
+                    <button class="btn" onclick="toggleParticles()">✨ Effetti Magici</button>
+                    <button class="btn" onclick="createConfetti()">🎊 Festa!</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- GALLERY SECTION -->
+        <section class="section-white" id="gallery">
+            <h2 class="section-title">🖼️ Momenti Speciali Insieme</h2>
+            <div class="gallery-container">
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1488459716781-6f3ee8e34413?w=400&h=280&fit=crop" alt="Amici 1">
+                    <div class="gallery-label">Abbracci Sinceri</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400&h=280&fit=crop" alt="Amici 2">
+                    <div class="gallery-label">Risate Spontanee</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1533900298318-6b8da08a523e?w=400&h=280&fit=crop" alt="Amici 3">
+                    <div class="gallery-label">Avventure Condivise</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1516438775256-71a08867b419?w=400&h=280&fit=crop" alt="Amici 4">
+                    <div class="gallery-label">Legame Speciale</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1505765050380-f5f0662c3ee1?w=400&h=280&fit=crop" alt="Amici 5">
+                    <div class="gallery-label">Momenti Magici</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400&h=280&fit=crop" alt="Amici 6">
+                    <div class="gallery-label">Complicità Vera</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DEDICHE SECTION -->
+        <section class="section-light" id="dediche">
+            <h2 class="section-title">💌 Le Mie Dediche Per Te</h2>
+            <div class="dediche-grid">
+                <div class="dedica">
+                    <div class="dedica-content">
+                        <h3><span class="emoji">⭐</span> L'Amicizia Vera <span class="sound-icon" onclick="playSound('success')">🔊</span></h3>
+                        <p>Un vero amico è colui che cammina con te anche quando il cammino è difficile. Grazie per essere sempre stato presente, per ascoltarmi e supportarmi. La tua amicizia è un dono prezioso che non dimenticherò mai.</p>
+                    </div>
+                </div>
+
+                <div class="dedica">
+                    <div class="dedica-content">
+                        <h3><span class="emoji">😊</span> Il Tuo Sorriso <span class="sound-icon" onclick="playSound('pop')">🔊</span></h3>
+                        <p>Il tuo sorriso ha il potere di illuminare anche i giorni più bui. La gioia che porti con te è contagiosa e mi ricorda sempre il bello della vita. Continua a sorridere e a diffondere questa bellezza attorno a te.</p>
+                    </div>
+                </div>
+
+                <div class="dedica">
+                    <div class="dedica-content">
+                        <h3><span class="emoji">💪</span> La Tua Forza <span class="sound-icon" onclick="playSound('success')">🔊</span></h3>
+                        <p>Ammiro la tua forza e la tua determinazione. La maniera in cui affronti le sfide mi ispira a essere una persona migliore. Sei un esempio di coraggio e resilienza per me e per tutti coloro che ti conoscono.</p>
+                    </div>
+                </div>
+
+                <div class="dedica">
+                    <div class="dedica-content">
+                        <h3><span class="emoji">🤝</span> Condivisione <span class="sound-icon" onclick="playSound('pop')">🔊</span></h3>
+                        <p>I momenti che abbiamo condiviso sono tesori che custodisco nel mio cuore. Dalle risate più spontanee alle conversazioni profonde, ogni istante con te è speciale e significativo. Grazie per questi ricordi indimenticabili.</p>
+                    </div>
+                </div>
+
+                <div class="dedica">
+                    <div class="dedica-content">
+                        <h3><span class="emoji">🌟</span> La Tua Unicità <span class="sound-icon" onclick="playSound('success')">🔊</span></h3>
+                        <p>Non c'è nessuno come te. Il tuo carattere unico, le tue passioni e i tuoi sogni ti rendono speciale. Apprezzo ogni aspetto di chi sei e spero che tu continui a credere in te stesso come io credo in te.</p>
+                    </div>
+                </div>
+
+                <div class="dedica">
+                    <div class="dedica-content">
+                        <h3><span class="emoji">❤️</span> Con Affetto Sincero <span class="sound-icon" onclick="playSound('pop')">🔊</span></h3>
+                        <p>Ci voglio bene, amico. Voglio che tu sappia che la tua amicizia è importante per me, che le tue gioie sono anche le mie gioie e che sarò sempre qui per te. Ti auguro una vita piena di felicità, successo e amore.</p>
+                    </div>
+                </div>
+
+                <div class="dedica">
+                    <div class="dedica-content">
+                        <h3><span class="emoji">🎯</span> I Tuoi Sogni <span class="sound-icon" onclick="playSound('success')">🔊</span></h3>
+                        <p>Credo nei tuoi sogni e nelle tue ambizioni. So che raggiungerai cose straordinarie perché hai tutto quello che serve: determinazione, cuore e lo spirito giusto. Sarò qui a celebrare ogni tuo successo con te.</p>
+                    </div>
+                </div>
+
+                <div class="dedica">
+                    <div class="dedica-content">
+                        <h3><span class="emoji">🌈</span> La Nostra Amicizia <span class="sound-icon" onclick="playSound('pop')">🔊</span></h3>
+                        <p>La nostra amicizia è come un arcobaleno: bella, rara e piena di colori diversi. È preziosa e non la do mai per scontata. Ti ringrazio per ogni momento, ogni parola, ogni gesto che ha reso speciale questa amicizia.</p>
+                    </div>
+                </div>
+
+                <div class="dedica">
+                    <div class="dedica-content">
+                        <h3><span class="emoji">🔥</span> Energia Positiva <span class="sound-icon" onclick="playSound('success')">🔊</span></h3>
+                        <p>La tua energia positiva è contagiosa. Quando sei di buon umore, il mondo sembra più luminoso. Grazie per avermi mostrato come affrontare la vita con un sorriso e con speranza anche nei momenti difficili.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TIMELINE SECTION -->
+        <section class="section-white">
+            <h2 class="section-title">📅 La Nostra Storia</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h4>Il Primo Incontro</h4>
+                        <p>Quando ci siamo incontrati, ho subito sentito che qualcosa di speciale stava iniziando. Un'amicizia vera e sincera.</p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h4>I Primi Momenti</h4>
+                        <p>Le risate, le avventure, i sogni condivisi. Ogni momento passato insieme è diventato un ricordo prezioso.</p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h4>Nei Momenti Difficili</h4>
+                        <p>Quando tutto sembrava complicato, eri lì per me. La tua solidarietà ha significato tutto.</p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h4>La Crescita Insieme</h4>
+                        <p>Abbiamo imparato insieme, cresciuto insieme, e di conseguenza ci siamo conosciuti sempre meglio.</p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h4>Per Sempre Amici</h4>
+                        <p>Questa amicizia durerà per sempre. Sei una parte importante della mia vita, oggi e sempre.</p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- QUOTES SECTION -->
+        <section class="section-light" id="quotes">
+            <h2 class="section-title">💭 Citazioni Su L'Amicizia</h2>
+            <div class="quotes-grid">
+                <div class="quote-card" onclick="playSound('success')">
+                    <div class="quote-mark">"</div>
+                    <div class="quote-text">L'amicizia è una cosa dell'anima. Non è cosa che si può spiegare.</div>
+                    <div class="quote-author">— Aristotele</div>
+                </div>
+
+                <div class="quote-card" onclick="playSound('pop')">
+                    <div class="quote-mark">"</div>
+                    <div class="quote-text">Un vero amico è colui che entra quando il resto del mondo esce.</div>
+                    <div class="quote-author">— Walter Winchell</div>
+                </div>
+
+                <div class="quote-card" onclick="playSound('success')">
+                    <div class="quote-mark">"</div>
+                    <div class="quote-text">L'amicizia che può finire, non è mai stata iniziata veramente.</div>
+                    <div class="quote-author">— Henry David Thoreau</div>
+                </div>
+
+                <div class="quote-card" onclick="playSound('pop')">
+                    <div class="quote-mark">"</div>
+                    <div class="quote-text">Gli amici sono la famiglia che scegliamo per noi stessi.</div>
+                    <div class="quote-author">— Edna Buchanan</div>
+                </div>
+
+                <div class="quote-card" onclick="playSound('success')">
+                    <div class="quote-mark">"</div>
+                    <div class="quote-text">L'amicizia è il miglior tesoro di una vita.</div>
+                    <div class="quote-author">— Confucio</div>
+                </div>
+
+                <div class="quote-card" onclick="playSound('pop')">
+                    <div class="quote-mark">"</div>
+                    <div class="quote-text">Nella vera amicizia, ogni pensiero, ogni azione è condiviso.</div>
+                    <div class="quote-author">— Simone Weil</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- WISHES SECTION -->
+        <section class="section-white">
+            <h2 class="section-title">🎁 I Miei Auguri Per Te</h2>
+            <div class="wishes-grid">
+                <div class="wish-item" onclick="playSound('success')">
+                    <div class="wish-emoji">🌟</div>
+                    <div class="wish-text">Che tu raggiunga tutti i tuoi sogni</div>
+                </div>
+                <div class="wish-item" onclick="playSound('pop')">
+                    <div class="wish-emoji">😊</div>
+                    <div class="wish-text">Che tu sorrida sempre</div>
+                </div>
+                <div class="wish-item" onclick="playSound('success')">
+                    <div class="wish-emoji">💪</div>
+                    <div class="wish-text">Che tu sia sempre forte</div>
+                </div>
+                <div class="wish-item" onclick="playSound('pop')">
+                    <div class="wish-emoji">❤️</div>
+                    <div class="wish-text">Che tu senta amore infinito</div>
+                </div>
+                <div class="wish-item" onclick="playSound('success')">
+                    <div class="wish-emoji">🚀</div>
+                    <div class="wish-text">Che tu voli alto</div>
+                </div>
+                <div class="wish-item" onclick="playSound('pop')">
+                    <div class="wish-emoji">🌈</div>
+                    <div class="wish-text">Che ogni giorno sia colorato</div>
+                </div>
+                <div class="wish-item" onclick="playSound('success')">
+                    <div class="wish-emoji">🏆</div>
+                    <div class="wish-text">Che tu vinca ogni sfida</div>
+                </div>
+                <div class="wish-item" onclick="playSound('pop')">
+                    <div class="wish-emoji">🎉</div>
+                    <div class="wish-text">Che tu abbia sempre motivi di festa</div>
+                </div>
+                <div class="wish-item" onclick="playSound('success')">
+                    <div class="wish-emoji">💖</div>
+                    <div class="wish-text">Che tu sappia quanto sei importante</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <h2><span class="stars">✨</span> Grazie di Essere Mio Amico <span class="stars">✨</span></h2>
+        <p>Questa pagina è dedicata a una persona speciale: te</p>
+        <p style="font-size: 1.3em; margin-top: 30px;">Con stima, affetto e gratitudine infinita</p>
+        <p style="font-size: 1.5em; margin-top: 20px;">💖 Ti Voglio Bene Amico 💖</p>
+        <p style="font-size: 0.95em; opacity: 0.8; margin-top: 30px;">Creato con ❤️ per celebrare la nostra amicizia</p>
+    </footer>
+
+    <div class="scroll-indicator" onclick="scrollToTop()">↑</div>
+
+    <audio id="bgMusic" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        let musicPlaying = false;
+        let particlesEnabled = true;
+        const bgMusic = document.getElementById('bgMusic');
+        bgMusic.volume = 0.2;
+
+        // NAVIGATION
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // AUDIO FUNCTIONS
+        function playSound(type) {
+            try {
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const now = audioContext.currentTime;
+                const osc = audioContext.createOscillator();
+                const gain = audioContext.createGain();
+
+                osc.connect(gain);
+                gain.connect(audioContext.destination);
+
+                if (type === 'success') {
+                    osc.frequency.setValueAtTime(523.25, now);
+                    osc.frequency.setValueAtTime(659.25, now + 0.1);
+                    osc.frequency.setValueAtTime(783.99, now + 0.2);
+                    gain.gain.setValueAtTime(0.3, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.4);
+                    osc.start(now);
+                    osc.stop(now + 0.4);
+                } else if (type === 'pop') {
+                    osc.frequency.setValueAtTime(800, now);
+                    osc.frequency.exponentialRampToValueAtTime(100, now + 0.1);
+                    gain.gain.setValueAtTime(0.3, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
+                    osc.start(now);
+                    osc.stop(now + 0.1);
+                }
+            } catch (e) {
+                console.log('Audio non disponibile');
+            }
+        }
+
+        function toggleBackgroundMusic() {
+            if (musicPlaying) {
+                bgMusic.pause();
+                musicPlaying = false;
+            } else {
+                bgMusic.play().catch(() => console.log('Autoplay bloccato'));
+                musicPlaying = true;
+            }
+        }
+
+        function playRandomSound() {
+            const sounds = ['success', 'pop'];
+            playSound(sounds[Math.floor(Math.random() * sounds.length)]);
+            createParticles(8);
+        }
+
+        // PARTICLES
+        function createParticles(count) {
+            const emojis = ['💝', '⭐', '💖', '🎉', '✨', '💫', '🌟', '❤️', '🎊', '🌈'];
+            
+            for (let i = 0; i < count; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                particle.style.left = Math.random() * window.innerWidth + 'px';
+                particle.style.top = window.innerHeight + 'px';
+                particle.style.animation = `particleFloat ${2 + Math.random() * 2}s ease-out forwards`;
+                document.body.appendChild(particle);
+
+                setTimeout(() => particle.remove(), 5000);
+            }
+        }
+
+        function toggleParticles() {
+            particlesEnabled = !particlesEnabled;
+            if (particlesEnabled) {
+                createParticles(15);
+            }
+        }
+
+        function createConfetti() {
+            for (let i = 0; i < 30; i++) {
+                createParticles(1);
+            }
+            playRandomSound();
+        }
+
+        // SCROLL EVENTS
+        window.addEventListener('scroll', () => {
+            if (particlesEnabled && Math.random() < 0.15) {
+                createParticles(1);
+            }
+        });
+
+        window.addEventListener('load', () => {
+            createParticles(8);
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.btn') && 
+                !e.target.closest('.nav-btn') && 
+                !e.target.closest('.sound-icon') &&
+                !e.target.closest('.quote-card') &&
+                !e.target.closest('.wish-item') &&
+                Math.random() < 0.2) {
+                playSound('pop');
+                createParticles(2);
+            }
+        });
+    </script>
+</body>
+</html>
